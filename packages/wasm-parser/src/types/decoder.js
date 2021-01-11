@@ -84,5 +84,7 @@ type DecoderOpts = {
   dump: boolean,
   ignoreDataSection: boolean,
   ignoreCodeSection: boolean,
-  ignoreCustomNameSection: boolean
+  ignoreCustomNameSection: Boolean,
+
+  enableBulkMemory: Boolean
 };

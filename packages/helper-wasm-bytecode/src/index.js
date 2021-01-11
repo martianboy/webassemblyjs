@@ -98,7 +98,8 @@ const sections = {
   start: 8,
   element: 9,
   code: 10,
-  data: 11
+  data: 11,
+  dataCount: 12
 };
 
 const symbolsByByte = {
@@ -152,6 +153,7 @@ const symbolsByByte = {
   0x26: illegalop,
   0x27: illegalop,
 
+  // Memory instructions
   0x28: createSymbolObject("load", "u32", 1),
   0x29: createSymbolObject("load", "u64", 1),
   0x2a: createSymbolObject("load", "f32", 1),
@@ -180,6 +182,18 @@ const symbolsByByte = {
   0x3f: createSymbolObject("current_memory"),
   0x40: createSymbolObject("grow_memory"),
 
+  // Bulk memory instructions
+  0xfc08: createSymbol("memory.init", 2),
+  0xfc09: createSymbol("data.drop", 1),
+  0xfc0a: createSymbol("memory.copy", 2),
+  0xfc0b: createSymbol("memory.fill", 1),
+
+  // Table instructions
+  0xfc0c: createSymbol("table.init", 2),
+  0xfc0d: createSymbol("elem.drop", 1),
+  0xfc0e: createSymbol("table.copy", 2),
+
+  // Numeric instructions
   0x41: createSymbolObject("const", "i32", 1),
   0x42: createSymbolObject("const", "i64", 1),
   0x43: createSymbolObject("const", "f32", 1),
@@ -318,10 +332,22 @@ const symbolsByByte = {
   0xbe: createSymbolObject("reinterpret/i32", "f32"),
   0xbf: createSymbolObject("reinterpret/i64", "f64"),
 
+  // Saturating truncation instructions 
+  0xfc00: createSymbolObject("trunc_sat_f32_s", "i32"),
+  0xfc01: createSymbolObject("trunc_sat_f32_u", "i32"),
+  0xfc02: createSymbolObject("trunc_sat_f64_s", "i32"),
+  0xfc03: createSymbolObject("trunc_sat_f64_u", "i32"),
+  0xfc04: createSymbolObject("trunc_sat_f32_s", "i64"),
+  0xfc05: createSymbolObject("trunc_sat_f32_u", "i64"),
+  0xfc06: createSymbolObject("trunc_sat_f64_s", "i64"),
+  0xfc07: createSymbolObject("trunc_sat_f64_u", "i64"),
+
   // Atomic Memory Instructions
   0xfe00: createSymbol("memory.atomic.notify", 1),
   0xfe01: createSymbol("memory.atomic.wait32", 1),
   0xfe02: createSymbol("memory.atomic.wait64", 1),
+  
+  0xfe03: createSymbol("atomic.fence", 1),
 
   0xfe10: createSymbolObject("atomic.load", "i32", 1),
   0xfe11: createSymbolObject("atomic.load", "i64", 1),

@@ -247,6 +247,23 @@ export function decode(ab: ArrayBuffer, opts: DecoderOpts): Program {
     return decodeUInt32(buffer);
   }
 
+  function eatU32(): number {
+    const u32 = readU32();
+    eatBytes(u32.nextIndex);
+    return u32.value;
+  }
+
+  function eatU32AndExpect(expected_u32: number, error_message: string): number {
+    const u32 = readU32();
+    eatBytes(u32.nextIndex);
+
+    if (u32.value !== expected_u32) {
+      throw new Error(error_message);
+    }
+
+    return u32.value;
+  }
+
   function readVaruint32(): Decoded32 {
     // where 32 bits = max 4 bytes
 
@@ -716,6 +733,9 @@ export function decode(ab: ArrayBuffer, opts: DecoderOpts): Program {
       if (instructionByte === 0xfe) {
         instructionByte = 0xfe00 + readByte();
         eatBytes(1);
+      } else if (instructionByte === 0xfc) {
+        instructionByte = 0xfc00 + readByte();
+        eatBytes(1);
       }
 
       const instruction = constants.symbolsByByte[instructionByte];
@@ -1027,22 +1047,74 @@ export function decode(ab: ArrayBuffer, opts: DecoderOpts): Program {
             t.floatLiteral(value, valuef64.nan, valuef64.inf, String(value))
           );
         }
+      } else if (instructionByte >= 0xfc08 && instructionByte <= 0xfc0e) {
+        /**
+         * Bulk memory instructions
+         */
+
+        if (instruction.name === "memory.init") {
+          const index = eatU32();
+          dump([index], "index");
+
+          eatU32AndExpect(0, "zero flag expected");
+          dump([0], "reserved");
+
+        } else if (instruction.name === "data.drop") {
+          const index = eatU32();
+          dump([index], "index");
+
+        } else if (instruction.name === "memory.fill") {
+          eatU32AndExpect(0, "zero flag expected");
+          dump([0], "reserved");
+
+        } else if (instruction.name === "memory.copy") {
+          eatU32AndExpect(0, "zero flag expected");
+          dump([0], "reserved1");
+
+          eatU32AndExpect(0, "zero flag expected");
+          dump([0], "reserved2");
+
+        } else if (instruction.name === "table.init") {
+          const elemindex = eatU32();
+          dump([elemindex], "elemindex");
+
+          eatU32AndExpect(0, "zero flag expected");
+          dump([0], "reserved");
+
+        } else if (instruction.name === "elem.drop") {
+          const elemindex = eatU32();
+          dump([elemindex], "elemindex");
+
+        } else if (instruction.name === "table.copy") {
+          eatU32AndExpect(0, "zero flag expected");
+          dump([0], "reserved1");
+
+          eatU32AndExpect(0, "zero flag expected");
+          dump([0], "reserved2");
+
+        } else {
+          throw new Error(`Unexpected instruction ${instruction.name}`);
+        }
       } else if (instructionByte >= 0xfe00 && instructionByte <= 0xfeff) {
         /**
          * Atomic memory instructions
          */
 
-        const align32 = readU32();
-        const align = align32.value;
-        eatBytes(align32.nextIndex);
-
-        dump([align], "align");
-
-        const offsetu32 = readU32();
-        const offset = offsetu32.value;
-        eatBytes(offsetu32.nextIndex);
-
-        dump([offset], "offset");
+        if (instructionByte === 0xfe03) {
+          eatU32AndExpect(0, "zero flag expected");
+        } else {
+          const align32 = readU32();
+          const align = align32.value;
+          eatBytes(align32.nextIndex);
+  
+          dump([align], "align");
+  
+          const offsetu32 = readU32();
+          const offset = offsetu32.value;
+          eatBytes(offsetu32.nextIndex);
+  
+          dump([offset], "offset");
+        }
       } else {
         for (let i = 0; i < instruction.numberOfArgs; i++) {
           const u32 = readU32();
@@ -1457,6 +1529,13 @@ export function decode(ab: ArrayBuffer, opts: DecoderOpts): Program {
     return WITH_LOC(t.start(t.indexLiteral(startFuncIndex)), startLoc);
   }
 
+  function parseDataCountSection() {
+    const dataCount = eatU32();
+    dump([dataCount], "data count");
+
+    return [t.numberLiteralFromRaw(dataCount)];
+  }
+
   // https://webassembly.github.io/spec/binary/modules.html#data-section
   function parseDataSection(numberOfElements: number) {
     const dataEntries = [];
@@ -1464,30 +1543,41 @@ export function decode(ab: ArrayBuffer, opts: DecoderOpts): Program {
     dump([numberOfElements], "num elements");
 
     for (let i = 0; i < numberOfElements; i++) {
-      const memoryIndexu32 = readU32();
-      const memoryIndex = memoryIndexu32.value;
-      eatBytes(memoryIndexu32.nextIndex);
+      const mode = eatU32();
+      dump([mode], "data segment mode");
 
-      dump([memoryIndex], "memory index");
+      if ((mode & 1) === 1) {   // Passive data segment
+        const bytes: Array<Byte> = parseVec(b => b);
 
-      const instrs: Array<Instruction> = [];
-      parseInstructionBlock(instrs);
-
-      const hasExtraInstrs = instrs.filter(i => i.id !== "end").length !== 1;
-
-      if (hasExtraInstrs) {
-        throw new CompileError(
-          "data section offset must be a single instruction"
+        dump([], "init");
+  
+        dataEntries.push(
+          t.data(undefined, undefined, t.byteArray(bytes), mode)
+        );
+      } else {
+        const memoryIndex = ((mode & 2) === 2) ? eatU32() : 0;
+  
+        dump([memoryIndex], "memory index");
+  
+        const instrs: Array<Instruction> = [];
+        parseInstructionBlock(instrs);
+  
+        const hasExtraInstrs = instrs.filter(i => i.id !== "end").length !== 1;
+  
+        if (hasExtraInstrs) {
+          throw new CompileError(
+            "data section offset must be a single instruction"
+          );
+        }
+  
+        const bytes: Array<Byte> = parseVec(b => b);
+  
+        dump([], "init");
+  
+        dataEntries.push(
+          t.data(t.memIndexLiteral(memoryIndex), instrs[0], t.byteArray(bytes), mode)
         );
       }
-
-      const bytes: Array<Byte> = parseVec(b => b);
-
-      dump([], "init");
-
-      dataEntries.push(
-        t.data(t.memIndexLiteral(memoryIndex), instrs[0], t.byteArray(bytes))
-      );
     }
 
     return dataEntries;
@@ -1505,6 +1595,10 @@ export function decode(ab: ArrayBuffer, opts: DecoderOpts): Program {
     eatBytes(1);
 
     if (
+      sectionId === constants.sections.dataCount
+    ) {
+      // do nothing
+    } else if (
       sectionId >= sectionIndex ||
       sectionIndex === constants.sections.custom
     ) {
@@ -1803,6 +1897,21 @@ export function decode(ab: ArrayBuffer, opts: DecoderOpts): Program {
           const nodes = parseDataSection(numberOfElements);
           return { nodes, metadata, nextSectionIndex };
         }
+      }
+
+      case constants.sections.dataCount: {
+        dumpSep("section DataCount");
+        dump([sectionId], "section code");
+        dump([sectionSizeInBytes], "section size");
+
+        const metadata = t.sectionMetadata(
+          "data",
+          startOffset,
+          sectionSizeInBytesNode
+        );
+
+        const nodes = parseDataCountSection(); // parseDataCountSection(numberOfElements);
+        return { nodes, metadata, nextSectionIndex };
       }
 
       case constants.sections.custom: {

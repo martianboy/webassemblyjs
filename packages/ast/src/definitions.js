@@ -411,6 +411,10 @@ defineType("Data", {
     },
     init: {
       type: "ByteArray"
+    },
+    mode: {
+      type: "number",
+      optional: true
     }
   }
 });

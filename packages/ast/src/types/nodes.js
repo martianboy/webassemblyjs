@@ -279,7 +279,8 @@ type Data = {
   type: "Data",
   memoryIndex: Memidx,
   offset: Instruction,
-  init: ByteArray
+  init: ByteArray,
+  mode?: number
 };
 
 type Global = {

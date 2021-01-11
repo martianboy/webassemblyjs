@@ -555,14 +555,26 @@ export function blockComment(value: string): BlockComment {
 export function data(
   memoryIndex: Memidx,
   offset: Instruction,
-  init: ByteArray
+  init: ByteArray,
+  mode?: number
 ): Data {
+  if (mode !== null && mode !== undefined) {
+    assert(
+      typeof mode === "number",
+      "Argument mode must be of type number, given: " + typeof mode
+    );
+  }
+
   const node: Data = {
     type: "Data",
     memoryIndex,
     offset,
     init
   };
+
+  if (typeof mode !== "undefined") {
+    node.mode = mode;
+  }
 
   return node;
 }
