@@ -293,7 +293,7 @@ type Global = {
 type Table = {
   ...BaseNode,
   type: "Table",
-  elementType: TableElementType,
+  elementType: RefType,
   limits: Limit,
   name: ?Identifier,
   elements?: Array<Index>
@@ -386,6 +386,7 @@ type CallIndirectInstruction = {
   type: "CallIndirectInstruction",
   id: string,
   signature: SignatureOrTypeRef,
+  table: Tableidx,
   intrs?: Array<Expression>
 };
 

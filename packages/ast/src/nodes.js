@@ -585,7 +585,7 @@ export function global(
 }
 
 export function table(
-  elementType: TableElementType,
+  elementType: RefType,
   limits: Limit,
   name: ?Identifier,
   elements?: Array<Index>
@@ -830,6 +830,7 @@ export function callInstruction(
 
 export function callIndirectInstruction(
   signature: SignatureOrTypeRef,
+  table: Tableidx,
   intrs?: Array<Expression>
 ): CallIndirectInstruction {
   if (intrs !== null && intrs !== undefined) {
@@ -839,7 +840,8 @@ export function callIndirectInstruction(
   const node: CallIndirectInstruction = {
     type: "CallIndirectInstruction",
     id: "call_indirect",
-    signature
+    signature,
+    table
   };
 
   if (typeof intrs !== "undefined" && intrs.length > 0) {

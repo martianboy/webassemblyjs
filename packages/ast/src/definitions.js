@@ -436,7 +436,7 @@ defineType("Table", {
   unionType: ["Node", "ImportDescr"],
   fields: {
     elementType: {
-      type: "TableElementType"
+      type: "RefType"
     },
     limits: {
       assertNodeType: true,
@@ -630,6 +630,9 @@ defineType("CallIndirectInstruction", {
     },
     signature: {
       type: "SignatureOrTypeRef"
+    },
+    table: {
+      type: "Tableidx"
     },
     intrs: {
       array: true,

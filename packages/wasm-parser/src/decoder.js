@@ -275,6 +275,31 @@ export function decode(ab: ArrayBuffer, opts: DecoderOpts): Program {
     return decodeInt32(buffer);
   }
 
+  function readIdx(msg, validate) {
+    return () => {
+      const idx32 = readU32();
+      const idx = idx32.value;
+      eatBytes(idx32.nextIndex);
+
+      if (typeof validate === "function") {
+        validate(idx);
+      }
+
+      dump([idx], msg);
+      return idx;
+    };
+  }
+
+  function validateTableIdx(idx: number) {
+    if (state.tablesInModule[idx] === undefined) {
+      throw new CompileError("Unknown table index: " + toHex(idx));
+    }
+  }
+
+  const readTableIdx = readIdx("tableidx", validateTableIdx);
+  const readFuncIdx = readIdx("funcidx");
+  const readElemIdx = readIdx("elemidx");
+
   /**
    * Decode a signed 64bits integer
    */
@@ -713,8 +738,8 @@ export function decode(ab: ArrayBuffer, opts: DecoderOpts): Program {
       let instructionByte = readByte();
       eatBytes(1);
 
-      if (instructionByte === 0xfe) {
-        instructionByte = 0xfe00 + readByte();
+      if (instructionByte === 0xfe || instructionByte === 0xfc) {
+        instructionByte = (instructionByte << 8) + readByte();
         eatBytes(1);
       }
 
@@ -882,18 +907,13 @@ export function decode(ab: ArrayBuffer, opts: DecoderOpts): Program {
           );
         }
 
+        const tableIdx = readTableIdx();
+
         const callNode = t.callIndirectInstruction(
           t.signature(signature.params, signature.result),
+          tableIdx,
           []
         );
-
-        const flagU32 = readU32();
-        const flag = flagU32.value; // 0x00 - reserved byte
-        eatBytes(flagU32.nextIndex);
-
-        if (flag !== 0) {
-          throw new CompileError("zero flag expected");
-        }
 
         code.push(WITH_LOC(callNode, startLoc));
         instructionAlreadyCreated = true;
@@ -913,6 +933,23 @@ export function decode(ab: ArrayBuffer, opts: DecoderOpts): Program {
 
           args.push(t.numberLiteralFromRaw(indexu32.value.toString(), "u32"));
         }
+      } else if (instructionByte === 0x1c) {
+        /**
+         * Type-annotated Select
+         */
+
+        const valTypeByte = readByte();
+        eatBytes(1);
+
+        const valType = constants.valtypes[valTypeByte];
+
+        if (typeof valType === "undefined") {
+          throw new CompileError("Unknown value type: " + toHex(valType));
+        }
+
+        dump([valTypeByte], `valtype ${valType}`);
+
+        args.push(t.stringLiteral(valType));
       } else if (instructionByte >= 0x28 && instructionByte <= 0x40) {
         /**
          * Memory instructions
@@ -1027,6 +1064,56 @@ export function decode(ab: ArrayBuffer, opts: DecoderOpts): Program {
             t.floatLiteral(value, valuef64.nan, valuef64.inf, String(value))
           );
         }
+      } else if (instructionByte >= 0xd0 && instructionByte <= 0xd2) {
+        if (instructionByte === 0xd0) {
+          const refTypeByte = readByte();
+          eatBytes(1);
+
+          const refType = constants.reftypes[refTypeByte];
+
+          if (typeof refType === "undefined") {
+            throw new CompileError(
+              "Unknown element type in table: " + toHex(refType)
+            );
+          }
+
+          dump([refTypeByte], `reftype ${refType}`);
+
+          args.push(t.stringLiteral(refType));
+        } else if (instructionByte === 0xd2) {
+          readFuncIdx();
+        }
+      } else if (instructionByte === 0x25 || instructionByte === 0x26) {
+        /**
+         * Table instructions
+         */
+        readTableIdx();
+      } else if (instructionByte >= 0xfc0c && instructionByte <= 0xfc11) {
+        /**
+         * Table instructions
+         */
+
+        switch (instruction.name) {
+          case "table.init":
+            readElemIdx();
+            readTableIdx();
+            break;
+
+          case "elem.drop":
+            readElemIdx();
+            break;
+
+          case "table.copy":
+            readTableIdx();
+            readTableIdx();
+            break;
+
+          case "table.grow":
+          case "table.size":
+          case "table.fill":
+            readTableIdx();
+            break;
+        }
       } else if (instructionByte >= 0xfe00 && instructionByte <= 0xfeff) {
         /**
          * Atomic memory instructions
@@ -1078,7 +1165,7 @@ export function decode(ab: ArrayBuffer, opts: DecoderOpts): Program {
   function parseLimits(): Limit {
     const limitType = readByte();
     eatBytes(1);
-    
+
     const shared = limitType === 0x03;
 
     dump([limitType], "limit type" + (shared ? " (shared)" : ""));
@@ -1122,7 +1209,7 @@ export function decode(ab: ArrayBuffer, opts: DecoderOpts): Program {
 
     dump([elementTypeByte], "element type");
 
-    const elementType = constants.tableTypes[elementTypeByte];
+    const elementType = constants.reftypes[elementTypeByte];
 
     if (typeof elementType === "undefined") {
       throw new CompileError(

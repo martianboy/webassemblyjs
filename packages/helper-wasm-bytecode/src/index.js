@@ -48,28 +48,42 @@ const exportTypes = {
 
 const exportTypesByName = invertMap(exportTypes);
 
-const valtypes = {
+// https://webassembly.github.io/reference-types/core/binary/types.html
+const reftypes = {
+  0x6f: "externref",
+  0x70: "funcref"
+};
+
+const numtypes = {
+  // https://webassembly.github.io/spec/core/binary/types.html
   0x7f: "i32",
   0x7e: "i64",
   0x7d: "f32",
   0x7c: "f64",
+  // https://webassembly.github.io/simd/core/binary/types.html
   0x7b: "v128"
 };
 
-const valtypesByString = invertMap(valtypes);
+const valtypes = {
+  ...reftypes,
+  ...numtypes
+};
 
-const tableTypes = {
-  0x70: "anyfunc"
+const valtypesByString = {
+  ...invertMap(valtypes),
+
+  // Reference types rename the `anyfunc` type to `funcref`,
+  // but accepts `anyfunc` as well. So we map `anyfunc` back
+  // to `funcref` for the sake of backward compatibility,
+  // and consistency with other tools like `wasm2wat`.
+  anyfunc: 0x70
 };
 
 const blockTypes = Object.assign({}, valtypes, {
   // https://webassembly.github.io/spec/core/binary/types.html#binary-blocktype
   0x40: null,
   // https://webassembly.github.io/spec/core/binary/types.html#binary-valtype
-  0x7f: "i32",
-  0x7e: "i64",
-  0x7d: "f32",
-  0x7c: "f64"
+  ...valtypes
 });
 
 const globalTypes = {
@@ -136,8 +150,8 @@ const symbolsByByte = {
 
   0x1a: createSymbol("drop"),
   0x1b: createSymbol("select"),
+  0x1c: createSymbol("select", 1),
 
-  0x1c: illegalop,
   0x1d: illegalop,
   0x1e: illegalop,
   0x1f: illegalop,
@@ -148,8 +162,8 @@ const symbolsByByte = {
   0x23: createSymbol("get_global", 1),
   0x24: createSymbol("set_global", 1),
 
-  0x25: illegalop,
-  0x26: illegalop,
+  0x25: createSymbol("table.get", 1),
+  0x26: createSymbol("table.set", 1),
   0x27: illegalop,
 
   0x28: createSymbolObject("load", "u32", 1),
@@ -318,6 +332,18 @@ const symbolsByByte = {
   0xbe: createSymbolObject("reinterpret/i32", "f32"),
   0xbf: createSymbolObject("reinterpret/i64", "f64"),
 
+  // Reference Instructions
+  0xd0: createSymbol("ref.null", 1),
+  0xd1: createSymbol("ref.is_null"),
+  0xd2: createSymbol("ref.func", 1),
+
+  0xfc0c: createSymbol("table.init", 2),
+  0xfc0d: createSymbol("elem.drop", 1),
+  0xfc0e: createSymbol("table.copy", 2),
+  0xfc0f: createSymbol("table.grow", 1),
+  0xfc10: createSymbol("table.size", 1),
+  0xfc11: createSymbol("table.fill", 1),
+
   // Atomic Memory Instructions
   0xfe00: createSymbol("memory.atomic.notify", 1),
   0xfe01: createSymbol("memory.atomic.wait32", 1),
@@ -410,10 +436,10 @@ export default {
   magicModuleHeader,
   moduleVersion,
   types,
+  reftypes,
   valtypes,
   exportTypes,
   blockTypes,
-  tableTypes,
   globalTypes,
   importTypes,
   valtypesByString,

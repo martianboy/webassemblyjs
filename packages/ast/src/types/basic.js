@@ -50,7 +50,7 @@ type NodePath<T> = {
   remove: () => void
 };
 
-type TableElementType = "anyfunc";
+type RefType = "funcref" | "externref";
 
 type LongNumber = {
   high: number,

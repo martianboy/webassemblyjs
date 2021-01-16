@@ -86,6 +86,8 @@ export const keywords = {
   table: "table",
   global: "global",
   anyfunc: "anyfunc",
+  externref: "externref",
+  funcref: "funcref",
   mut: "mut",
   data: "data",
   type: "type",
