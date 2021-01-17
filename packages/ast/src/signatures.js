@@ -11,6 +11,8 @@ const i32 = "i32";
 const i64 = "i64";
 const f32 = "f32";
 const f64 = "f64";
+const reftype = "reftype";
+const valtype = "valtype";
 
 const vector = t => {
   const vecType = [t];
@@ -36,7 +38,15 @@ const controlInstructions = {
 
 const parametricInstructions = {
   drop: sign([], []),
-  select: sign([], [])
+  // $FlowIgnore
+  select: sign([valtype], [])
+};
+
+const referenceInstructions = {
+  // $FlowIgnore:
+  "ref.null": sign([reftype], []),
+  "ref.is_null": sign([], []),
+  "ref.func": sign([u32], [])
 };
 
 const variableInstructions = {
@@ -73,6 +83,17 @@ const memoryInstructions = {
   "i64.store32": sign([u32, u32], []),
   current_memory: sign([], []),
   grow_memory: sign([], [])
+};
+
+const tableInstructions = {
+  "table.get": sign([u32], []),
+  "table.set": sign([u32], []),
+  "table.init": sign([u32, u32], []),
+  "elem.drop": sign([u32], []),
+  "table.copy": sign([u32, u32], []),
+  "table.grow": sign([u32], []),
+  "table.size": sign([u32], []),
+  "table.fill": sign([u32], [])
 };
 
 const numericInstructions = {
@@ -218,7 +239,9 @@ export const signatures = Object.assign(
   {},
   controlInstructions,
   parametricInstructions,
+  referenceInstructions,
   variableInstructions,
   memoryInstructions,
+  tableInstructions,
   numericInstructions
 );
