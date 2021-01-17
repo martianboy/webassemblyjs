@@ -102,6 +102,16 @@
     (select funcref)
     (select externref)
 
+    (ref.null)
+    (ref.null anyfunc)
+    (ref.null funcref)
+    (ref.null externref)
+
+    (ref.is_null)
+
+    (ref.func 0)
+    (ref.func $t)
+
     (call_indirect 1 (type 14))
     (call_indirect $table_0 (type $t4))
 
