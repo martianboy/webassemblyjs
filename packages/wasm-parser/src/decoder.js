@@ -296,7 +296,7 @@ export function decode(ab: ArrayBuffer, opts: DecoderOpts): Program {
     }
   }
 
-  const readTableIdx = readIdx("tableidx", validateTableIdx);
+  const readTableIdx = readIdx("tableidx");
   const readFuncIdx = readIdx("funcidx");
   const readElemIdx = readIdx("elemidx");
 
