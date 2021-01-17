@@ -9,6 +9,11 @@
         "value": 0,
         "raw": "0"
       },
+      "table": {
+        "type": "NumberLiteral",
+        "value": 0,
+        "raw": "0"
+      },
       "intrs": [
         {
           "type": "Instr",
@@ -61,6 +66,11 @@
           }
         }
       },
+      "table": {
+        "type": "NumberLiteral",
+        "value": 0,
+        "raw": "0"
+      },
       "intrs": [
         {
           "type": "Instr",
@@ -103,6 +113,11 @@
         "type": "Signature",
         "params": [],
         "results": []
+      },
+      "table": {
+        "type": "NumberLiteral",
+        "value": 0,
+        "raw": "0"
       },
       "intrs": [
         {
@@ -150,6 +165,11 @@
           }
         ],
         "results": []
+      },
+      "table": {
+        "type": "NumberLiteral",
+        "value": 0,
+        "raw": "0"
       },
       "intrs": [
         {
@@ -231,6 +251,11 @@
           }
         ],
         "results": []
+      },
+      "table": {
+        "type": "NumberLiteral",
+        "value": 0,
+        "raw": "0"
       },
       "intrs": [
         {
@@ -369,6 +394,11 @@
         "params": [],
         "results": []
       },
+      "table": {
+        "type": "NumberLiteral",
+        "value": 0,
+        "raw": "0"
+      },
       "intrs": [
         {
           "type": "Instr",
@@ -421,6 +451,11 @@
                 "results": [
                   "i32"
                 ]
+              },
+              "table": {
+                "type": "NumberLiteral",
+                "value": 0,
+                "raw": "0"
               },
               "intrs": [
                 {
@@ -489,6 +524,11 @@
                 "results": [
                   "i32"
                 ]
+              },
+              "table": {
+                "type": "NumberLiteral",
+                "value": 0,
+                "raw": "0"
               },
               "intrs": [
                 {
@@ -561,6 +601,11 @@
                 "results": [
                   "i32"
                 ]
+              },
+              "table": {
+                "type": "NumberLiteral",
+                "value": 0,
+                "raw": "0"
               },
               "intrs": [
                 {
@@ -667,6 +712,11 @@
                 "results": [
                   "i32"
                 ]
+              },
+              "table": {
+                "type": "NumberLiteral",
+                "value": 0,
+                "raw": "0"
               },
               "intrs": [
                 {
@@ -837,6 +887,11 @@
                   }
                 }
               },
+              "table": {
+                "type": "NumberLiteral",
+                "value": 0,
+                "raw": "0"
+              },
               "intrs": [
                 {
                   "type": "Instr",
@@ -909,6 +964,72 @@
         "end": {
           "line": 30,
           "column": 0
+        }
+      }
+    },
+    {
+      "type": "CallIndirectInstruction",
+      "id": "call_indirect",
+      "signature": {
+        "type": "NumberLiteral",
+        "value": 14,
+        "raw": "14"
+      },
+      "table": {
+        "type": "NumberLiteral",
+        "value": 1,
+        "raw": "1"
+      },
+      "loc": {
+        "start": {
+          "line": 32,
+          "column": 1
+        },
+        "end": {
+          "line": 32,
+          "column": 25
+        }
+      }
+    },
+    {
+      "type": "CallIndirectInstruction",
+      "id": "call_indirect",
+      "signature": {
+        "type": "Identifier",
+        "value": "t4",
+        "loc": {
+          "start": {
+            "line": 33,
+            "column": 30
+          },
+          "end": {
+            "line": 33,
+            "column": 33
+          }
+        }
+      },
+      "table": {
+        "type": "Identifier",
+        "value": "table_0",
+        "loc": {
+          "start": {
+            "line": 33,
+            "column": 15
+          },
+          "end": {
+            "line": 33,
+            "column": 23
+          }
+        }
+      },
+      "loc": {
+        "start": {
+          "line": 33,
+          "column": 1
+        },
+        "end": {
+          "line": 33,
+          "column": 33
         }
       }
     }

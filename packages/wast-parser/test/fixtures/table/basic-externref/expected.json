@@ -3,7 +3,7 @@
   "body": [
     {
       "type": "Table",
-      "elementType": "funcref",
+      "elementType": "externref",
       "limits": {
         "type": "Limit",
         "min": 10
@@ -29,13 +29,13 @@
         },
         "end": {
           "line": 1,
-          "column": 21
+          "column": 23
         }
       }
     },
     {
       "type": "Table",
-      "elementType": "funcref",
+      "elementType": "externref",
       "limits": {
         "type": "Limit",
         "min": 0,
@@ -62,13 +62,13 @@
         },
         "end": {
           "line": 2,
-          "column": 22
+          "column": 24
         }
       }
     },
     {
       "type": "Table",
-      "elementType": "funcref",
+      "elementType": "externref",
       "limits": {
         "type": "Limit",
         "min": 10
@@ -85,13 +85,13 @@
         },
         "end": {
           "line": 3,
-          "column": 16
+          "column": 18
         }
       }
     },
     {
       "type": "Table",
-      "elementType": "funcref",
+      "elementType": "externref",
       "limits": {
         "type": "Limit",
         "min": 0,
@@ -109,13 +109,13 @@
         },
         "end": {
           "line": 4,
-          "column": 18
+          "column": 20
         }
       }
     },
     {
       "type": "Table",
-      "elementType": "funcref",
+      "elementType": "externref",
       "limits": {
         "type": "Limit",
         "min": 10
@@ -141,7 +141,7 @@
         },
         "end": {
           "line": 5,
-          "column": 19
+          "column": 21
         }
       }
     }

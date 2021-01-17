@@ -7,7 +7,7 @@
       "fields": [
         {
           "type": "Table",
-          "elementType": "anyfunc",
+          "elementType": "funcref",
           "limits": {
             "type": "Limit",
             "min": 0

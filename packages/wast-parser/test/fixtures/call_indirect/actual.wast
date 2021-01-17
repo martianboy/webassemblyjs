@@ -29,3 +29,5 @@
   )
 ))
 
+(call_indirect 1 (type 14))
+(call_indirect $table_0 (type $t4))

@@ -1,0 +1,5 @@
+(table "a" 10 funcref)
+(table "b" 0 10 funcref)
+(table 10 funcref)
+(table 0 10 funcref)
+(table $a 10 funcref)
