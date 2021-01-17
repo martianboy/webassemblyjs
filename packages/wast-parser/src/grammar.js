@@ -298,7 +298,7 @@ export function parse(tokensList: Array<Object>, source: string): Program {
      *          ( table <name>? ( export <string> )* <elem_type> ( elem <var>* ) )
      *
      * table_type:  <nat> <nat>? <elem_type>
-     * elem_type: anyfunc
+     * elem_type: funcref | externref
      *
      * elem:    ( elem <var>? (offset <instr>* ) <var>* )
      *          ( elem <var>? <expr> <var>* )
@@ -308,7 +308,7 @@ export function parse(tokensList: Array<Object>, source: string): Program {
 
       let limit = t.limit(0);
       const elemIndices = [];
-      const elemType = "anyfunc";
+      let elemType = "funcref";
 
       if (token.type === tokens.string || token.type === tokens.identifier) {
         name = identifierFromToken(token);
@@ -349,9 +349,12 @@ export function parse(tokensList: Array<Object>, source: string): Program {
           });
 
           eatTokenOfType(tokens.closeParen);
-        } else if (isKeyword(token, keywords.anyfunc)) {
-          // It's the default value, we can ignore it
-          eatToken(); // anyfunc
+        } else if (isKeyword(token, keywords.anyfunc) || isKeyword(token, keywords.funcref)) {
+          elemType = "funcref";
+          eatToken();
+        } else if (isKeyword(token, keywords.externref)) {
+          elemType = "externref";
+          eatToken();
         } else if (token.type === tokens.number) {
           /**
            * Table type
@@ -367,8 +370,6 @@ export function parse(tokensList: Array<Object>, source: string): Program {
           } else {
             limit = t.limit(min);
           }
-
-          eatToken();
         } else {
           throw createUnexpectedToken("Unexpected token");
         }
@@ -730,12 +731,16 @@ export function parse(tokensList: Array<Object>, source: string): Program {
 
     function parseCallIndirect(): CallIndirectInstruction {
       let typeRef;
+      let tableIdx;
       const params = [];
       const results = [];
       const instrs = [];
 
       while (token.type !== tokens.closeParen) {
-        if (lookaheadAndCheck(tokens.openParen, keywords.type)) {
+        if (token.type === tokens.number || token.type === tokens.identifier) {
+          tableIdx = parseTableReference();
+          continue;
+        } else if (lookaheadAndCheck(tokens.openParen, keywords.type)) {
           eatToken(); // (
           eatToken(); // type
           typeRef = parseTypeReference();
@@ -770,8 +775,13 @@ export function parse(tokensList: Array<Object>, source: string): Program {
         eatTokenOfType(tokens.closeParen);
       }
 
+      if (!tableIdx) {
+        tableIdx = t.numberLiteralFromRaw(0);
+      }
+
       return t.callIndirectInstruction(
         typeRef !== undefined ? typeRef : t.signature(params, results),
+        tableIdx,
         instrs
       );
     }
@@ -1416,19 +1426,35 @@ export function parse(tokensList: Array<Object>, source: string): Program {
     }
 
     /**
+     * Parses an index or an identifier
+     *
+     */
+    function parseIndexOrIdentifier() {
+      let node;
+      if (token.type === tokens.identifier) {
+        node = identifierFromToken(token);
+        eatToken();
+      } else if (token.type === tokens.number) {
+        node = t.numberLiteralFromRaw(token.value);
+        eatToken();
+      }
+      return node;
+    }
+
+    /**
      * Parses a type reference
      *
      */
     function parseTypeReference() {
-      let ref;
-      if (token.type === tokens.identifier) {
-        ref = identifierFromToken(token);
-        eatToken();
-      } else if (token.type === tokens.number) {
-        ref = t.numberLiteralFromRaw(token.value);
-        eatToken();
-      }
-      return ref;
+      return parseIndexOrIdentifier();
+    }
+
+    /**
+     * Parses a table reference
+     *
+     */
+    function parseTableReference() {
+      return parseIndexOrIdentifier();
     }
 
     /**

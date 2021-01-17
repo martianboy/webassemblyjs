@@ -830,7 +830,7 @@ export function callInstruction(
 
 export function callIndirectInstruction(
   signature: SignatureOrTypeRef,
-  table: Tableidx,
+  table: Index,
   intrs?: Array<Expression>
 ): CallIndirectInstruction {
   if (intrs !== null && intrs !== undefined) {

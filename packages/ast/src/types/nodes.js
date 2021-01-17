@@ -386,7 +386,7 @@ type CallIndirectInstruction = {
   type: "CallIndirectInstruction",
   id: string,
   signature: SignatureOrTypeRef,
-  table: Tableidx,
+  table: Index,
   intrs?: Array<Expression>
 };
 

@@ -632,7 +632,7 @@ defineType("CallIndirectInstruction", {
       type: "SignatureOrTypeRef"
     },
     table: {
-      type: "Tableidx"
+      type: "Index"
     },
     intrs: {
       array: true,

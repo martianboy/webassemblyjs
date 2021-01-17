@@ -911,7 +911,7 @@ export function decode(ab: ArrayBuffer, opts: DecoderOpts): Program {
 
         const callNode = t.callIndirectInstruction(
           t.signature(signature.params, signature.result),
-          tableIdx,
+          t.numberLiteralFromRaw(tableIdx),
           []
         );
 
