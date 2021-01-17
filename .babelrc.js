@@ -7,7 +7,7 @@ if (useESM) {
 }
 
 const presets = [
-  ['@babel/preset-env', { modules }],
+  ['@babel/preset-env', { modules, "targets": { "node": "current" } }],
   '@babel/preset-flow',
 ];
 
