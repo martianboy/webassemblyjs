@@ -96,16 +96,16 @@ export function compare(
   getActual: (string, string) => string = NOOP_FN,
   getExpected: (string, string) => string = NOOP_FN
 ) {
-  fixtures.forEach(suite => {
-    it(suite, () => {
+  for (const suite of fixtures) {
+    it(suite, async () => {
       const input = readFileSync(suite, "utf8");
 
-      const actual = getActual(input, suite);
+      const actual = await getActual(input, suite);
       const expected = getExpected(input, suite);
 
       compareStrings(actual, expected);
     });
-  });
+  }
 }
 
 function writeExpectedFile(expectedFile, content) {
