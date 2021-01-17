@@ -97,6 +97,11 @@
     (f32.const inf)
     (f32.const -inf)
 
+    (select)
+    (select i32)
+    (select funcref)
+    (select externref)
+
     (call_indirect 1 (type 14))
     (call_indirect $table_0 (type $t4))
 

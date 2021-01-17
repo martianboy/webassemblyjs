@@ -25,7 +25,16 @@ const WHITESPACE = /\s/;
 const PARENS = /\(|\)/;
 const LETTERS = /[a-z0-9_/]/i;
 const idchar = /[a-z0-9!#$%&*+./:<=>?@\\[\]^_`|~-]/i;
-const valtypes = ["i32", "i64", "f32", "f64"];
+const valtypes = [
+  "i32",
+  "i64",
+  "f32",
+  "f64",
+  "v128",
+  "anyfunc",
+  "funcref",
+  "externref"
+];
 
 const NUMBERS = /[0-9|.|_]/;
 const NUMBER_KEYWORDS = /nan|inf/;
@@ -85,9 +94,6 @@ export const keywords = {
   shared: "shared",
   table: "table",
   global: "global",
-  anyfunc: "anyfunc",
-  externref: "externref",
-  funcref: "funcref",
   mut: "mut",
   data: "data",
   type: "type",
@@ -435,15 +441,15 @@ export function tokenize(input: string) {
 
         while (char === ".") {
           eatCharacter(); // Eat the dot
-  
+
           value = "";
           const nameStartColumn = column;
-  
+
           while (LETTERS.test(char)) {
             value += char;
             eatCharacter();
           }
-  
+
           pushDotToken(".", { startColumn: dotStartColumn });
           pushNameToken(value, { startColumn: nameStartColumn });
         }

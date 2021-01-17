@@ -31,6 +31,16 @@ function isKeyword(token: Object, id: string): boolean {
   return token.type === tokens.keyword && token.value === id;
 }
 
+function isReftype(token: Object): boolean {
+  if (token.type !== "valtype") return false;
+
+  return (
+    token.value === "anyfunc" ||
+    token.value === "funcref" ||
+    token.value === "externref"
+  );
+}
+
 function tokenToString(token: Object): string {
   if (token.type === "keyword") {
     return `keyword (${token.value})`;
@@ -228,7 +238,7 @@ export function parse(tokensList: Array<Object>, source: string): Program {
           limits.max = parse32I(token.value);
           eatToken();
 
-          if (token.type === tokens.keyword && token.value === 'shared') {
+          if (token.type === tokens.keyword && token.value === "shared") {
             limits.shared = true;
             eatToken();
           }
@@ -349,11 +359,17 @@ export function parse(tokensList: Array<Object>, source: string): Program {
           });
 
           eatTokenOfType(tokens.closeParen);
-        } else if (isKeyword(token, keywords.anyfunc) || isKeyword(token, keywords.funcref)) {
-          elemType = "funcref";
-          eatToken();
-        } else if (isKeyword(token, keywords.externref)) {
-          elemType = "externref";
+        } else if (isReftype(token)) {
+          switch (token.value) {
+            case "funcref":
+            case "anyfunc":
+              elemType = "funcref";
+              break;
+            case "externref":
+              elemType = "externref";
+              break;
+          }
+
           eatToken();
         } else if (token.type === tokens.number) {
           /**
@@ -1089,6 +1105,7 @@ export function parse(tokensList: Array<Object>, source: string): Program {
      *   call_indirect <func_sig>
      *   drop
      *   select
+     *   select <valtype>
      *   get_local <var>
      *   set_local <var>
      *   tee_local <var>
@@ -1123,7 +1140,7 @@ export function parse(tokensList: Array<Object>, source: string): Program {
 
         if (token.type === tokens.dot) {
           object = name;
-          const name_parts = []
+          const name_parts = [];
 
           do {
             eatToken(); // Eat the dot
@@ -1138,7 +1155,7 @@ export function parse(tokensList: Array<Object>, source: string): Program {
             eatToken(); // Eat the name
           } while (token.type === tokens.dot);
 
-          name = name_parts.join('.');
+          name = name_parts.join(".");
         }
 
         if (token.type === tokens.closeParen) {
