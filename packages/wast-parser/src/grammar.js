@@ -1136,11 +1136,18 @@ export function parse(tokensList: Array<Object>, source: string): Program {
         let name = token.value;
         let object;
 
-        eatToken();
-
-        if (token.type === tokens.dot) {
-          object = name;
+        if (
+          lookaheadAndCheck(tokens.name, tokens.dot) === true ||
+          lookaheadAndCheck(tokens.valtype, tokens.dot) === true
+        ) {
           const name_parts = [];
+
+          if (token.type === tokens.valtype) {
+            object = name;
+          } else {
+            name_parts.push(name);
+          }
+          eatToken(); // Finally eat the token
 
           do {
             eatToken(); // Eat the dot
@@ -1156,6 +1163,8 @@ export function parse(tokensList: Array<Object>, source: string): Program {
           } while (token.type === tokens.dot);
 
           name = name_parts.join(".");
+        } else {
+          eatToken();
         }
 
         if (token.type === tokens.closeParen) {
