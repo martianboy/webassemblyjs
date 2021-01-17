@@ -16,7 +16,7 @@ const {
   encodeHeader
 } = require("@webassemblyjs/wasm-gen/lib/encoder");
 const constants = require("@webassemblyjs/helper-wasm-bytecode").default;
-const wabt = require("wabt")();
+const loadWabt = require("wabt")();
 const { parse } = require("@webassemblyjs/wast-parser");
 const { decode } = require("../lib");
 const { traverse } = require("@webassemblyjs/ast");
@@ -54,7 +54,8 @@ function stripMetadata(ast) {
 
 const wasmFeatures = {
   simd: true,
-  threads: true
+  threads: true,
+  reference_types: true
 };
 
 // - Expected is wast-parser
@@ -64,7 +65,8 @@ describe("Binary decoder", () => {
     const testSuites = getFixtures(__dirname, "fixtures", "**", "actual.wat");
 
     // convert the WAT fixture to WASM
-    const getActual = (f, suite) => {
+    const getActual = async (f, suite) => {
+      const wabt = await loadWabt;
       const module = wabt.parseWat(suite, f, wasmFeatures);
       const { buffer } = module.toBinary({ write_debug_names: true });
 

@@ -7171,10 +7171,10 @@ wabt@1.0.0-nightly.20180421:
   version "1.0.0-nightly.20180421"
   resolved "https://registry.yarnpkg.com/wabt/-/wabt-1.0.0-nightly.20180421.tgz#db3565bff0d5023c9576270aa5369f2cec45b878"
 
-wabt@1.0.12:
-  version "1.0.12"
-  resolved "https://registry.yarnpkg.com/wabt/-/wabt-1.0.12.tgz#c3ef04e464a47ddffe9c37af480b0de159bf48b7"
-  integrity sha512-Pq6UNbElHXo/Gxr+amBsmY3CgsO3VxS540YsH5cN/WaGl87yrWGC61TSxz2n5L+V2qC0jb7QoVIBvz4WbVQUlA==
+wabt@1.0.20:
+  version "1.0.20"
+  resolved "https://registry.yarnpkg.com/wabt/-/wabt-1.0.20.tgz#f8a6bf88bb439c881c42c39afb05e05cf29acf00"
+  integrity sha512-chkTTrB1XolSLs6lBk7/U5oXaxUMECeJOiMuiTHYgC8BS0EToJGFXuL5Dgggv2S+SS78GQ8YPovRrmUwT7pOlQ==
 
 wcwidth@^1.0.0:
   version "1.0.1"
