@@ -440,6 +440,7 @@
 0x201:	 0x0 										 ; offset
 0x202:	 0x11 										 ; call_indirect
 0x207:	 0x0 										 ; type index
+0x208:	 0x0 										 ; tableidx
 0x209:	 0x20 										 ; get_local
 0x20a:	 0x1 										 ; argument 0
 0x20b:	 0x41 										 ; i32.const
@@ -487,6 +488,7 @@
 0x244:	 0x0 										 ; offset
 0x245:	 0x11 										 ; call_indirect
 0x24a:	 0x0 										 ; type index
+0x24b:	 0x0 										 ; tableidx
 0x24c:	 0x20 										 ; get_local
 0x24d:	 0x1 										 ; argument 0
 0x24e:	 0x41 										 ; i32.const
@@ -1443,6 +1445,7 @@
 0x6ea:	 0xc 										 ; offset
 0x6eb:	 0x11 										 ; call_indirect
 0x6f0:	 0x1 										 ; type index
+0x6f1:	 0x0 										 ; tableidx
 0x6f2:	 0x20 										 ; get_local
 0x6f3:	 0x0 										 ; argument 0
 0x6f4:	 0x41 										 ; i32.const
@@ -1503,6 +1506,7 @@
 0x72b:	 0x0 										 ; offset
 0x72c:	 0x11 										 ; call_indirect
 0x731:	 0x1 										 ; type index
+0x732:	 0x0 										 ; tableidx
 0x733:	 0x2 										 ; block
 0x734:	 0x40 										 ; blocktype
 0x735:	 0x20 										 ; get_local
@@ -4716,6 +4720,7 @@
 0x1689:	 0xc 										 ; offset
 0x168a:	 0x11 										 ; call_indirect
 0x168f:	 0x2 										 ; type index
+0x1690:	 0x0 										 ; tableidx
 0x1691:	 0x20 										 ; get_local
 0x1692:	 0x4 										 ; argument 0
 0x1693:	 0x41 										 ; i32.const
@@ -5252,6 +5257,7 @@
 0x1930:	 0xc 										 ; offset
 0x1931:	 0x11 										 ; call_indirect
 0x1936:	 0x3 										 ; type index
+0x1937:	 0x0 										 ; tableidx
 0x1938:	 0xb 										 ; end
 ; function body 48
 0x1939:	 0x17 										 ; function body size
@@ -5297,6 +5303,7 @@
 0x1972:	 0x1b 										 ; select
 0x1973:	 0x11 										 ; call_indirect
 0x1978:	 0x2 										 ; type index
+0x1979:	 0x0 										 ; tableidx
 0x197a:	 0x0 										 ; unreachable
 0x197b:	 0x0 										 ; unreachable
 0x197c:	 0xb 										 ; end
@@ -5804,6 +5811,7 @@
 0x1c33:	 0x10 										 ; offset
 0x1c34:	 0x11 										 ; call_indirect
 0x1c39:	 0x2 										 ; type index
+0x1c3a:	 0x0 										 ; tableidx
 0x1c3b:	 0x20 										 ; get_local
 0x1c3c:	 0x4 										 ; argument 0
 0x1c3d:	 0x20 										 ; get_local
@@ -5828,6 +5836,7 @@
 0x1c50:	 0xc 										 ; offset
 0x1c51:	 0x11 										 ; call_indirect
 0x1c56:	 0x2 										 ; type index
+0x1c57:	 0x0 										 ; tableidx
 0x1c58:	 0x41 										 ; i32.const
 0x1c59:	 0x0 										 ; i32 value
 0x1c5a:	 0x28 										 ; u32.load
@@ -6960,6 +6969,7 @@
 0x21ac:	 0x0 										 ; offset
 0x21ad:	 0x11 										 ; call_indirect
 0x21b2:	 0x1 										 ; type index
+0x21b3:	 0x0 										 ; tableidx
 0x21b4:	 0x20 										 ; get_local
 0x21b5:	 0x5 										 ; argument 0
 0x21b6:	 0x28 										 ; u32.load
@@ -7010,6 +7020,7 @@
 0x21e9:	 0x0 										 ; argument 0
 0x21ea:	 0x11 										 ; call_indirect
 0x21ef:	 0x1 										 ; type index
+0x21f0:	 0x0 										 ; tableidx
 0x21f1:	 0x41 										 ; i32.const
 0x21f2:	 0x0 										 ; i32 value
 0x21f3:	 0xb 										 ; end
@@ -14785,6 +14796,7 @@
 0x41ca:	 0xc 										 ; offset
 0x41cb:	 0x11 										 ; call_indirect
 0x41d0:	 0x4 										 ; type index
+0x41d1:	 0x0 										 ; tableidx
 0x41d2:	 0x21 										 ; set_local
 0x41d3:	 0x4 										 ; argument 0
 0x41d4:	 0xc 										 ; br
@@ -15088,6 +15100,7 @@
 0x4305:	 0xc 										 ; offset
 0x4306:	 0x11 										 ; call_indirect
 0x430b:	 0x4 										 ; type index
+0x430c:	 0x0 										 ; tableidx
 0x430d:	 0x21 										 ; set_local
 0x430e:	 0x4 										 ; argument 0
 0x430f:	 0xc 										 ; br
@@ -15380,6 +15393,7 @@
 0x443b:	 0xc 										 ; offset
 0x443c:	 0x11 										 ; call_indirect
 0x4441:	 0x4 										 ; type index
+0x4442:	 0x0 										 ; tableidx
 0x4443:	 0x45 										 ; i32.eqz
 0x4444:	 0xd 										 ; br_if
 0x4445:	 0x0 										 ; argument 0
@@ -15416,6 +15430,7 @@
 0x4464:	 0xc 										 ; offset
 0x4465:	 0x11 										 ; call_indirect
 0x446a:	 0x4 										 ; type index
+0x446b:	 0x0 										 ; tableidx
 0x446c:	 0xd 										 ; br_if
 0x446d:	 0x0 										 ; argument 0
 0x446e:	 0x41 										 ; i32.const
@@ -15458,6 +15473,7 @@
 0x4493:	 0xc 										 ; offset
 0x4494:	 0x11 										 ; call_indirect
 0x4499:	 0x4 										 ; type index
+0x449a:	 0x0 										 ; tableidx
 0x449b:	 0x45 										 ; i32.eqz
 0x449c:	 0xd 										 ; br_if
 0x449d:	 0x0 										 ; argument 0
@@ -15499,6 +15515,7 @@
 0x44c1:	 0xc 										 ; offset
 0x44c2:	 0x11 										 ; call_indirect
 0x44c7:	 0x4 										 ; type index
+0x44c8:	 0x0 										 ; tableidx
 0x44c9:	 0x21 										 ; set_local
 0x44ca:	 0x4 										 ; argument 0
 0x44cb:	 0xb 										 ; end
@@ -17259,6 +17276,7 @@
 0x4c86:	 0xc 										 ; offset
 0x4c87:	 0x11 										 ; call_indirect
 0x4c8c:	 0x4 										 ; type index
+0x4c8d:	 0x0 										 ; tableidx
 0x4c8e:	 0xd 										 ; br_if
 0x4c8f:	 0x0 										 ; argument 0
 0x4c90:	 0x20 										 ; get_local
@@ -17759,6 +17777,7 @@
 0x4e8f:	 0x0 										 ; offset
 0x4e90:	 0x11 										 ; call_indirect
 0x4e95:	 0x5 										 ; type index
+0x4e96:	 0x0 										 ; tableidx
 0x4e97:	 0x45 										 ; i32.eqz
 0x4e98:	 0xd 										 ; br_if
 0x4e99:	 0x1 										 ; argument 0
@@ -17830,6 +17849,7 @@
 0x4edb:	 0xc 										 ; offset
 0x4edc:	 0x11 										 ; call_indirect
 0x4ee1:	 0x4 										 ; type index
+0x4ee2:	 0x0 										 ; tableidx
 0x4ee3:	 0xd 										 ; br_if
 0x4ee4:	 0x0 										 ; argument 0
 0x4ee5:	 0x20 										 ; get_local
@@ -17882,6 +17902,7 @@
 0x4f14:	 0x2 										 ; argument 0
 0x4f15:	 0x11 										 ; call_indirect
 0x4f1a:	 0x5 										 ; type index
+0x4f1b:	 0x0 										 ; tableidx
 0x4f1c:	 0x45 										 ; i32.eqz
 0x4f1d:	 0xd 										 ; br_if
 0x4f1e:	 0x1 										 ; argument 0
@@ -17970,6 +17991,7 @@
 0x4f71:	 0xc 										 ; offset
 0x4f72:	 0x11 										 ; call_indirect
 0x4f77:	 0x4 										 ; type index
+0x4f78:	 0x0 										 ; tableidx
 0x4f79:	 0x45 										 ; i32.eqz
 0x4f7a:	 0xd 										 ; br_if
 0x4f7b:	 0x1 										 ; argument 0
@@ -18492,6 +18514,7 @@
 0x5204:	 0xc 										 ; offset
 0x5205:	 0x11 										 ; call_indirect
 0x520a:	 0x4 										 ; type index
+0x520b:	 0x0 										 ; tableidx
 0x520c:	 0xb 										 ; end
 ; function body 95
 0x520d:	 0x21 										 ; function body size
@@ -18518,6 +18541,7 @@
 0x5226:	 0xc 										 ; offset
 0x5227:	 0x11 										 ; call_indirect
 0x522c:	 0x4 										 ; type index
+0x522d:	 0x0 										 ; tableidx
 0x522e:	 0xb 										 ; end
 ; function body 96
 0x522f:	 0x7 										 ; function body size
@@ -20203,6 +20227,7 @@
 0x59ac:	 0x10 										 ; offset
 0x59ad:	 0x11 										 ; call_indirect
 0x59b2:	 0x5 										 ; type index
+0x59b3:	 0x0 										 ; tableidx
 0x59b4:	 0xd 										 ; br_if
 0x59b5:	 0x0 										 ; argument 0
 0x59b6:	 0x41 										 ; i32.const
@@ -20679,6 +20704,7 @@
 0x5be0:	 0x10 										 ; offset
 0x5be1:	 0x11 										 ; call_indirect
 0x5be6:	 0x5 										 ; type index
+0x5be7:	 0x0 										 ; tableidx
 0x5be8:	 0x21 										 ; set_local
 0x5be9:	 0x2 										 ; argument 0
 0x5bea:	 0xc 										 ; br
@@ -20701,6 +20727,7 @@
 0x5bfb:	 0x10 										 ; offset
 0x5bfc:	 0x11 										 ; call_indirect
 0x5c01:	 0x5 										 ; type index
+0x5c02:	 0x0 										 ; tableidx
 0x5c03:	 0x45 										 ; i32.eqz
 0x5c04:	 0xd 										 ; br_if
 0x5c05:	 0x0 										 ; argument 0
@@ -20814,6 +20841,7 @@
 0x5c7d:	 0xc 										 ; offset
 0x5c7e:	 0x11 										 ; call_indirect
 0x5c83:	 0x4 										 ; type index
+0x5c84:	 0x0 										 ; tableidx
 0x5c85:	 0xd 										 ; br_if
 0x5c86:	 0x3 										 ; argument 0
 0x5c87:	 0xb 										 ; end
@@ -21186,6 +21214,7 @@
 0x5e0b:	 0xc 										 ; offset
 0x5e0c:	 0x11 										 ; call_indirect
 0x5e11:	 0x4 										 ; type index
+0x5e12:	 0x0 										 ; tableidx
 0x5e13:	 0xd 										 ; br_if
 0x5e14:	 0x2 										 ; argument 0
 0x5e15:	 0x2 										 ; block
@@ -21381,6 +21410,7 @@
 0x5ef1:	 0xc 										 ; offset
 0x5ef2:	 0x11 										 ; call_indirect
 0x5ef7:	 0x4 										 ; type index
+0x5ef8:	 0x0 										 ; tableidx
 0x5ef9:	 0xd 										 ; br_if
 0x5efa:	 0x1 										 ; argument 0
 0x5efb:	 0x20 										 ; get_local
@@ -21418,6 +21448,7 @@
 0x5f23:	 0xc 										 ; offset
 0x5f24:	 0x11 										 ; call_indirect
 0x5f29:	 0x4 										 ; type index
+0x5f2a:	 0x0 										 ; tableidx
 0x5f2b:	 0xd 										 ; br_if
 0x5f2c:	 0x1 										 ; argument 0
 0x5f2d:	 0x20 										 ; get_local
@@ -21434,6 +21465,7 @@
 0x5f38:	 0xc 										 ; offset
 0x5f39:	 0x11 										 ; call_indirect
 0x5f3e:	 0x5 										 ; type index
+0x5f3f:	 0x0 										 ; tableidx
 0x5f40:	 0x21 										 ; set_local
 0x5f41:	 0x4 										 ; argument 0
 0x5f42:	 0xc 										 ; br
@@ -21600,6 +21632,7 @@
 0x5ff3:	 0xc 										 ; offset
 0x5ff4:	 0x11 										 ; call_indirect
 0x5ff9:	 0x5 										 ; type index
+0x5ffa:	 0x0 										 ; tableidx
 0x5ffb:	 0x21 										 ; set_local
 0x5ffc:	 0x4 										 ; argument 0
 0x5ffd:	 0xb 										 ; end
@@ -21726,6 +21759,7 @@
 0x6080:	 0xc 										 ; offset
 0x6081:	 0x11 										 ; call_indirect
 0x6086:	 0x4 										 ; type index
+0x6087:	 0x0 										 ; tableidx
 0x6088:	 0xd 										 ; br_if
 0x6089:	 0x1 										 ; argument 0
 0x608a:	 0x20 										 ; get_local
@@ -21787,6 +21821,7 @@
 0x60c6:	 0xc 										 ; offset
 0x60c7:	 0x11 										 ; call_indirect
 0x60cc:	 0x4 										 ; type index
+0x60cd:	 0x0 										 ; tableidx
 0x60ce:	 0xd 										 ; br_if
 0x60cf:	 0x1 										 ; argument 0
 0x60d0:	 0xb 										 ; end
@@ -21817,6 +21852,7 @@
 0x60ed:	 0xc 										 ; offset
 0x60ee:	 0x11 										 ; call_indirect
 0x60f3:	 0x4 										 ; type index
+0x60f4:	 0x0 										 ; tableidx
 0x60f5:	 0x21 										 ; set_local
 0x60f6:	 0x1 										 ; argument 0
 0x60f7:	 0xb 										 ; end
@@ -21928,6 +21964,7 @@
 0x616f:	 0xc 										 ; offset
 0x6170:	 0x11 										 ; call_indirect
 0x6175:	 0x4 										 ; type index
+0x6176:	 0x0 										 ; tableidx
 0x6177:	 0xd 										 ; br_if
 0x6178:	 0x2 										 ; argument 0
 0x6179:	 0x20 										 ; get_local
@@ -21949,6 +21986,7 @@
 0x6189:	 0xc 										 ; offset
 0x618a:	 0x11 										 ; call_indirect
 0x618f:	 0x5 										 ; type index
+0x6190:	 0x0 										 ; tableidx
 0x6191:	 0x21 										 ; set_local
 0x6192:	 0x4 										 ; argument 0
 0x6193:	 0xc 										 ; br
@@ -22117,6 +22155,7 @@
 0x6246:	 0xc 										 ; offset
 0x6247:	 0x11 										 ; call_indirect
 0x624c:	 0x5 										 ; type index
+0x624d:	 0x0 										 ; tableidx
 0x624e:	 0x21 										 ; set_local
 0x624f:	 0x4 										 ; argument 0
 0x6250:	 0xb 										 ; end
@@ -22273,6 +22312,7 @@
 0x62f7:	 0xc 										 ; offset
 0x62f8:	 0x11 										 ; call_indirect
 0x62fd:	 0x4 										 ; type index
+0x62fe:	 0x0 										 ; tableidx
 0x62ff:	 0x22 										 ; tee_local
 0x6300:	 0x2 										 ; argument 0
 0x6301:	 0x3a 										 ; u32.store8
@@ -22315,6 +22355,7 @@
 0x632a:	 0xc 										 ; offset
 0x632b:	 0x11 										 ; call_indirect
 0x6330:	 0x4 										 ; type index
+0x6331:	 0x0 										 ; tableidx
 0x6332:	 0x21 										 ; set_local
 0x6333:	 0x1 										 ; argument 0
 0x6334:	 0xb 										 ; end
@@ -23258,6 +23299,7 @@
 0x674a:	 0xc 										 ; offset
 0x674b:	 0x11 										 ; call_indirect
 0x6750:	 0x4 										 ; type index
+0x6751:	 0x0 										 ; tableidx
 0x6752:	 0x21 										 ; set_local
 0x6753:	 0x2 										 ; argument 0
 0x6754:	 0xc 										 ; br
@@ -23296,6 +23338,7 @@
 0x6779:	 0xc 										 ; offset
 0x677a:	 0x11 										 ; call_indirect
 0x677f:	 0x4 										 ; type index
+0x6780:	 0x0 										 ; tableidx
 0x6781:	 0x21 										 ; set_local
 0x6782:	 0x2 										 ; argument 0
 0x6783:	 0xc 										 ; br
@@ -23762,6 +23805,7 @@
 0x6965:	 0xc 										 ; offset
 0x6966:	 0x11 										 ; call_indirect
 0x696b:	 0x4 										 ; type index
+0x696c:	 0x0 										 ; tableidx
 0x696d:	 0x45 										 ; i32.eqz
 0x696e:	 0xd 										 ; br_if
 0x696f:	 0x0 										 ; argument 0
@@ -23809,6 +23853,7 @@
 0x699d:	 0xc 										 ; offset
 0x699e:	 0x11 										 ; call_indirect
 0x69a3:	 0x4 										 ; type index
+0x69a4:	 0x0 										 ; tableidx
 0x69a5:	 0xd 										 ; br_if
 0x69a6:	 0x2 										 ; argument 0
 0x69a7:	 0x41 										 ; i32.const
@@ -23851,6 +23896,7 @@
 0x69cc:	 0xc 										 ; offset
 0x69cd:	 0x11 										 ; call_indirect
 0x69d2:	 0x4 										 ; type index
+0x69d3:	 0x0 										 ; tableidx
 0x69d4:	 0x45 										 ; i32.eqz
 0x69d5:	 0xd 										 ; br_if
 0x69d6:	 0x0 										 ; argument 0
@@ -24030,6 +24076,7 @@
 0x6a8d:	 0xc 										 ; offset
 0x6a8e:	 0x11 										 ; call_indirect
 0x6a93:	 0x4 										 ; type index
+0x6a94:	 0x0 										 ; tableidx
 0x6a95:	 0x45 										 ; i32.eqz
 0x6a96:	 0xd 										 ; br_if
 0x6a97:	 0x0 										 ; argument 0
@@ -24066,6 +24113,7 @@
 0x6ab6:	 0xc 										 ; offset
 0x6ab7:	 0x11 										 ; call_indirect
 0x6abc:	 0x4 										 ; type index
+0x6abd:	 0x0 										 ; tableidx
 0x6abe:	 0xd 										 ; br_if
 0x6abf:	 0x0 										 ; argument 0
 0x6ac0:	 0x41 										 ; i32.const
@@ -24108,6 +24156,7 @@
 0x6ae5:	 0xc 										 ; offset
 0x6ae6:	 0x11 										 ; call_indirect
 0x6aeb:	 0x4 										 ; type index
+0x6aec:	 0x0 										 ; tableidx
 0x6aed:	 0x45 										 ; i32.eqz
 0x6aee:	 0xd 										 ; br_if
 0x6aef:	 0x0 										 ; argument 0
@@ -24406,6 +24455,7 @@
 0x6c30:	 0xc 										 ; offset
 0x6c31:	 0x11 										 ; call_indirect
 0x6c36:	 0x4 										 ; type index
+0x6c37:	 0x0 										 ; tableidx
 0x6c38:	 0xd 										 ; br_if
 0x6c39:	 0x1 										 ; argument 0
 0x6c3a:	 0xb 										 ; end
@@ -24455,6 +24505,7 @@
 0x6c66:	 0xc 										 ; offset
 0x6c67:	 0x11 										 ; call_indirect
 0x6c6c:	 0x4 										 ; type index
+0x6c6d:	 0x0 										 ; tableidx
 0x6c6e:	 0x21 										 ; set_local
 0x6c6f:	 0x3 										 ; argument 0
 0x6c70:	 0xc 										 ; br
@@ -24532,6 +24583,7 @@
 0x6cb9:	 0xc 										 ; offset
 0x6cba:	 0x11 										 ; call_indirect
 0x6cbf:	 0x4 										 ; type index
+0x6cc0:	 0x0 										 ; tableidx
 0x6cc1:	 0x3a 										 ; u32.store8
 0x6cc2:	 0x0 										 ; align
 0x6cc3:	 0x8 										 ; offset
@@ -24704,6 +24756,7 @@
 0x6d89:	 0x10 										 ; offset
 0x6d8a:	 0x11 										 ; call_indirect
 0x6d8f:	 0x5 										 ; type index
+0x6d90:	 0x0 										 ; tableidx
 0x6d91:	 0xd 										 ; br_if
 0x6d92:	 0x0 										 ; argument 0
 0x6d93:	 0x2 										 ; block
@@ -25293,6 +25346,7 @@
 0x6ffc:	 0xc 										 ; offset
 0x6ffd:	 0x11 										 ; call_indirect
 0x7002:	 0x4 										 ; type index
+0x7003:	 0x0 										 ; tableidx
 0x7004:	 0xd 										 ; br_if
 0x7005:	 0x3 										 ; argument 0
 0x7006:	 0x2 										 ; block
@@ -25557,6 +25611,7 @@
 0x7141:	 0x10 										 ; offset
 0x7142:	 0x11 										 ; call_indirect
 0x7147:	 0x5 										 ; type index
+0x7148:	 0x0 										 ; tableidx
 0x7149:	 0x45 										 ; i32.eqz
 0x714a:	 0xd 										 ; br_if
 0x714b:	 0x0 										 ; argument 0
@@ -25769,6 +25824,7 @@
 0x7227:	 0xc 										 ; offset
 0x7228:	 0x11 										 ; call_indirect
 0x722d:	 0x4 										 ; type index
+0x722e:	 0x0 										 ; tableidx
 0x722f:	 0xd 										 ; br_if
 0x7230:	 0x0 										 ; argument 0
 0x7231:	 0x20 										 ; get_local
@@ -25788,6 +25844,7 @@
 0x723f:	 0x10 										 ; offset
 0x7240:	 0x11 										 ; call_indirect
 0x7245:	 0x5 										 ; type index
+0x7246:	 0x0 										 ; tableidx
 0x7247:	 0x21 										 ; set_local
 0x7248:	 0x4 										 ; argument 0
 0x7249:	 0xb 										 ; end

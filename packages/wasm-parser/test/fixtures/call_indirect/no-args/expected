@@ -24,6 +24,7 @@
 0x19:	 0x0 										 ; i32 value
 0x1a:	 0x11 										 ; call_indirect
 0x1b:	 0x0 										 ; type index
+0x1c:	 0x0 										 ; tableidx
 0x1d:	 0xb 										 ; end
 ; section Custom
 0x1f:	 0x0 										 ; section code
