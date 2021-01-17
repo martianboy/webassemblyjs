@@ -546,17 +546,22 @@ function printCallIndirectIntruction(
 
   out += "(";
   out += "call_indirect";
+  
+  if (n.table.type === "Identifier" || (n.table.type === "NumberLiteral" && n.table.value > 0)) {
+    out += space;
+    out += printIndex(n.table);
+  }
 
   if (n.signature.type === "Signature") {
     out += printSignature(n.signature);
-  } else if (n.signature.type === "Identifier") {
+  } else if (n.signature.type === "Identifier" || n.signature.type === "NumberLiteral") {
     out += space;
 
     out += "(";
     out += "type";
 
     out += space;
-    out += printIdentifier(n.signature);
+    out += printIndex(n.signature);
 
     out += ")";
   } else {
@@ -566,19 +571,13 @@ function printCallIndirectIntruction(
     );
   }
 
-  out += space;
-
   if (n.intrs != null) {
     // $FlowIgnore
-    n.intrs.forEach((i, index) => {
+    for (const instruction of n.intrs) {
+      out += space;
       // $FlowIgnore
-      out += printInstruction(i, depth + 1);
-
-      // $FlowIgnore
-      if (index !== n.intrs.length - 1) {
-        out += space;
-      }
-    });
+      out += printInstruction(instruction, depth + 1);
+    }
   }
 
   out += ")";

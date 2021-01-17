@@ -1081,13 +1081,13 @@ export function decode(ab: ArrayBuffer, opts: DecoderOpts): Program {
 
           args.push(t.stringLiteral(refType));
         } else if (instructionByte === 0xd2) {
-          readFuncIdx();
+          args.push(t.indexLiteral(readFuncIdx()));
         }
       } else if (instructionByte === 0x25 || instructionByte === 0x26) {
         /**
          * Table instructions
          */
-        readTableIdx();
+        args.push(t.indexLiteral(readTableIdx()));
       } else if (instructionByte >= 0xfc0c && instructionByte <= 0xfc11) {
         /**
          * Table instructions
@@ -1095,23 +1095,23 @@ export function decode(ab: ArrayBuffer, opts: DecoderOpts): Program {
 
         switch (instruction.name) {
           case "table.init":
-            readElemIdx();
-            readTableIdx();
+            args.push(t.indexLiteral(readElemIdx()));
+            args.push(t.indexLiteral(readTableIdx()));
             break;
 
           case "elem.drop":
-            readElemIdx();
+            args.push(t.indexLiteral(readElemIdx()));
             break;
 
           case "table.copy":
-            readTableIdx();
-            readTableIdx();
+            args.push(t.indexLiteral(readTableIdx()));
+            args.push(t.indexLiteral(readTableIdx()));
             break;
 
           case "table.grow":
           case "table.size":
           case "table.fill":
-            readTableIdx();
+            args.push(t.indexLiteral(readTableIdx()));
             break;
         }
       } else if (instructionByte >= 0xfe00 && instructionByte <= 0xfeff) {

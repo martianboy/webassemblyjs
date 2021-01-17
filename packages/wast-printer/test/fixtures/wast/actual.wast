@@ -97,6 +97,9 @@
     (f32.const inf)
     (f32.const -inf)
 
+    (call_indirect 1 (type 14))
+    (call_indirect $table_0 (type $t4))
+
     (call_indirect (i32.const 0))
     (call_indirect (param i64) (i64.const 0) (i32.const 0))
     (call_indirect (result i32) (i32.const 0))
@@ -122,6 +125,8 @@
   (table 0 10 anyfunc)
   (table 0 anyfunc)
   (table $a 10 anyfunc)
+  (table $a 10 externref)
+  (table "a" 10 funcref)
 
   (func)
   (func $test)
