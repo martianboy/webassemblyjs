@@ -348,6 +348,15 @@ defineType("ValtypeLiteral", {
   }
 });
 
+defineType("HeapTypeLiteral", {
+  unionType: ["Node", "Expression"],
+  fields: {
+    name: {
+      type: "HeapType"
+    }
+  }
+});
+
 defineType("TypeInstruction", {
   unionType: ["Node", "Instruction"],
   fields: {

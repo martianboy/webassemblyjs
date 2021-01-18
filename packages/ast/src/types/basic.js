@@ -61,6 +61,7 @@ type NodePath<T> = {
 };
 
 type RefType = "funcref" | "externref";
+type HeapType = "func" | "extern";
 
 type LongNumber = {
   high: number,

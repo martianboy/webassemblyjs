@@ -489,6 +489,15 @@ export function valtypeLiteral(name: Valtype): ValtypeLiteral {
   return node;
 }
 
+export function heapTypeLiteral(name: HeapType): HeapTypeLiteral {
+  const node: HeapTypeLiteral = {
+    type: "HeapTypeLiteral",
+    name
+  };
+
+  return node;
+}
+
 export function typeInstruction(
   id: ?Index,
   functype: Signature
@@ -990,6 +999,8 @@ export const isIndexInFuncSection = isTypeOf("IndexInFuncSection");
 
 export const isValtypeLiteral = isTypeOf("ValtypeLiteral");
 
+export const isHeapTypeLiteral = isTypeOf("HeapTypeLiteral");
+
 export const isTypeInstruction = isTypeOf("TypeInstruction");
 
 export const isStart = isTypeOf("Start");
@@ -1064,6 +1075,7 @@ export const isNode = (node: Node) =>
   isElem(node) ||
   isIndexInFuncSection(node) ||
   isValtypeLiteral(node) ||
+  isHeapTypeLiteral(node) ||
   isTypeInstruction(node) ||
   isStart(node) ||
   isGlobalType(node) ||
@@ -1110,6 +1122,7 @@ export const isExpression = (node: Node) =>
   isLongNumberLiteral(node) ||
   isFloatLiteral(node) ||
   isValtypeLiteral(node) ||
+  isHeapTypeLiteral(node) ||
   isIdentifier(node);
 
 export const isNumericLiteral = (node: Node) =>
@@ -1172,6 +1185,8 @@ export const assertElem = assertTypeOf("Elem");
 export const assertIndexInFuncSection = assertTypeOf("IndexInFuncSection");
 
 export const assertValtypeLiteral = assertTypeOf("ValtypeLiteral");
+
+export const assertHeapTypeLiteral = assertTypeOf("HeapTypeLiteral");
 
 export const assertTypeInstruction = assertTypeOf("TypeInstruction");
 
@@ -1249,6 +1264,7 @@ export const unionTypesMap = {
   Elem: ["Node"],
   IndexInFuncSection: ["Node"],
   ValtypeLiteral: ["Node", "Expression"],
+  HeapTypeLiteral: ["Node", "Expression"],
   TypeInstruction: ["Node", "Instruction"],
   Start: ["Node"],
   GlobalType: ["Node", "ImportDescr"],
@@ -1299,6 +1315,7 @@ export const nodeAndUnionTypes = [
   "Elem",
   "IndexInFuncSection",
   "ValtypeLiteral",
+  "HeapTypeLiteral",
   "TypeInstruction",
   "Start",
   "GlobalType",

@@ -11,7 +11,7 @@ const i32 = "i32";
 const i64 = "i64";
 const f32 = "f32";
 const f64 = "f64";
-const reftype = "reftype";
+const heaptype = "heaptype";
 const valtype = "valtype";
 
 const vector = t => {
@@ -43,8 +43,7 @@ const parametricInstructions = {
 };
 
 const referenceInstructions = {
-  // $FlowIgnore:
-  "ref.null": sign([reftype], []),
+  "ref.null": sign([heaptype], []),
   "ref.is_null": sign([], []),
   "ref.func": sign([u32], [])
 };

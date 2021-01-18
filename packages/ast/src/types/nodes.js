@@ -25,6 +25,7 @@ type Node =
   | Elem
   | IndexInFuncSection
   | ValtypeLiteral
+  | HeapTypeLiteral
   | TypeInstruction
   | Start
   | GlobalType
@@ -70,6 +71,7 @@ type Expression =
   | LongNumberLiteral
   | FloatLiteral
   | ValtypeLiteral
+  | HeapTypeLiteral
   | Identifier;
 
 type NumericLiteral = NumberLiteral | LongNumberLiteral | FloatLiteral;
@@ -240,6 +242,12 @@ type ValtypeLiteral = {
   ...BaseNode,
   type: "ValtypeLiteral",
   name: Valtype
+};
+
+type HeapTypeLiteral = {
+  ...BaseNode,
+  type: "HeapTypeLiteral",
+  name: HeapType
 };
 
 type TypeInstruction = {
