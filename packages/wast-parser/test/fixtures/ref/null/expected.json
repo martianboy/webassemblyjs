@@ -34,8 +34,8 @@
           "id": "ref.null",
           "args": [
             {
-              "type": "ValtypeLiteral",
-              "name": "funcref"
+              "type": "HeapTypeLiteral",
+              "name": "func"
             }
           ],
           "loc": {
@@ -45,7 +45,7 @@
             },
             "end": {
               "line": 3,
-              "column": 18
+              "column": 15
             }
           }
         },
@@ -54,8 +54,8 @@
           "id": "ref.null",
           "args": [
             {
-              "type": "ValtypeLiteral",
-              "name": "externref"
+              "type": "HeapTypeLiteral",
+              "name": "extern"
             }
           ],
           "loc": {
@@ -65,7 +65,7 @@
             },
             "end": {
               "line": 4,
-              "column": 20
+              "column": 17
             }
           }
         }

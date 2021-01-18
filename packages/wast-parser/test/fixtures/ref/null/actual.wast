@@ -1,5 +1,5 @@
 (func
   (ref.null)
-  (ref.null funcref)
-  (ref.null externref)
+  (ref.null func)
+  (ref.null extern)
 )

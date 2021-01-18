@@ -875,6 +875,10 @@ function printFuncInstructionArg(n: Object, depth: number): string {
     out += n.name;
   }
 
+  if (n.type === "HeapTypeLiteral") {
+    out += n.name;
+  }
+
   if (n.type === "FloatLiteral") {
     out += printFloatLiteral(n);
   }

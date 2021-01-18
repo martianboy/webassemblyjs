@@ -103,9 +103,8 @@
     (select externref)
 
     (ref.null)
-    (ref.null anyfunc)
-    (ref.null funcref)
-    (ref.null externref)
+    (ref.null func)
+    (ref.null extern)
 
     (ref.is_null)
 

@@ -42,6 +42,10 @@ function isKeyword(token: Object, id: string): boolean {
   return token.type === tokens.keyword && token.value === id;
 }
 
+function isNameToken(token: Object, name: string): boolean {
+  return token.type === tokens.name && token.value === name;
+}
+
 function isReftype(token: Object): boolean {
   if (token.type !== "valtype") return false;
 
@@ -960,15 +964,10 @@ export function parse(tokensList: Array<Object>, source: string): Program {
       return t.module(name, moduleFields);
     }
 
-    /**
-     * Parses the arguments of an instruction
-     */
-    function parseFuncInstrArguments(signature: ?SignatureMap): AllArgs {
-      const args: Array<Expression> = [];
+    function parseNamedFuncInstrArguments(): Object {
       const namedArgs = {};
-      let signaturePtr = 0;
 
-      while (token.type === tokens.name || isKeyword(token, keywords.offset)) {
+      while (isNameToken(token, "align") || isKeyword(token, keywords.offset)) {
         const key = token.value;
         eatToken();
 
@@ -987,6 +986,17 @@ export function parse(tokensList: Array<Object>, source: string): Program {
         eatToken();
       }
 
+      return namedArgs;
+    }
+
+    /**
+     * Parses the arguments of an instruction
+     */
+    function parseFuncInstrArguments(signature: ?SignatureMap): AllArgs {
+      const args: Array<Expression> = [];
+      const namedArgs = parseNamedFuncInstrArguments();
+      let signaturePtr = 0;
+
       // $FlowIgnore
       const signatureLength = signature.vector ? Infinity : signature.length;
 
@@ -995,7 +1005,10 @@ export function parse(tokensList: Array<Object>, source: string): Program {
         // $FlowIgnore
         (token.type === tokens.openParen || signaturePtr < signatureLength)
       ) {
-        if (token.type === tokens.identifier) {
+        if (signature[signaturePtr] === 'heaptype') {
+          args.push(parseHeapType());
+          eatToken();
+        } else if (token.type === tokens.identifier) {
           args.push(t.identifier(token.value));
 
           eatToken();
@@ -1378,6 +1391,16 @@ export function parse(tokensList: Array<Object>, source: string): Program {
         name,
         id
       });
+    }
+
+    function parseHeapType(): HeapTypeLiteral {
+      if (isKeyword(token, keywords.func) || isNameToken(token, "extern")) {
+        return t.heapTypeLiteral(token.value);
+      }
+
+      throw createUnexpectedToken(
+        "Expected a heap type literal: func or extern"
+      );
     }
 
     /**
